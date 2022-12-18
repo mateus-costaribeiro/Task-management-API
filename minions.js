@@ -1,12 +1,14 @@
+// Require and call express
 const express = require('express');
 const app = express()
-
-const minionsRouter = express.Router()
-module.exports = minionsRouter
 
 // Require all utils
 const {createMeeting, getAllFromDatabase, getFromDatabaseById, addToDatabase, 
         updateInstanceInDatabase, deleteFromDatabasebyId, deleteAllFromDatabase} = require('./db')
+
+// Create router for '/minions'
+const minionsRouter = express.Router()
+module.exports = minionsRouter
 
 // Get minions array
 minionsRouter.get('/', (req, res, next) => {
@@ -20,7 +22,7 @@ minionsRouter.post('/', (req, res, next) => {
     res.status(201).send(newMinion)
 })
 
-// Get minion by ID
+// Get a single minion by ID
 minionsRouter.get('/:minionId', (req, res, next) => {
     const minionFound = getFromDatabaseById('minions', req.params.minionId)
     if(minionFound) {
